@@ -38,6 +38,10 @@ const useStyles = makeStyles((theme) => ({
         overflow: 'hidden',
         height: '100vh',
     },
+    error: {
+        marginTop: '25px',
+        color: '#e94a54',
+    },
 }))
 
 export default useStyles

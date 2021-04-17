@@ -2,6 +2,8 @@ import firebase from 'firebase/app'
 import 'firebase/auth'
 import 'firebase/database'
 import 'firebase/storage'
+import 'firebase/analytics'
+// import 'firebase/firestore'
 
 const firebaseConfig = {
     apiKey: 'AIzaSyDe9XwsA9a1-cMwFBaeuO7wc5PtJxQt9QA',
@@ -19,4 +21,9 @@ firebase.analytics()
 export const fbAuth = firebase.auth()
 export const fbDatabase = firebase.database()
 export const fbStorage = firebase.storage()
-export const timestamp = firebase.firestore.FieldValue.serverTimestamp
+// export const timestamp = firebase.firestore.FieldValue.serverTimestamp
+
+// references
+export const userRef = fbDatabase.ref('users')
+
+export default firebase

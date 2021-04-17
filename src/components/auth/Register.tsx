@@ -12,8 +12,12 @@ import { useFormik } from 'formik'
 import { validationAuthRegister } from './some/validation'
 import useStyles from './some/style'
 import { Paper } from '@material-ui/core'
+import { IRegister } from '../../interfaces/auth'
+import useRegister from '../../hooks/useRegister'
 
 const Register = () => {
+    const { isLoading, errors, createUser } = useRegister()
+
     const classes = useStyles({
         variant: 'register',
     })
@@ -24,8 +28,8 @@ const Register = () => {
             password: '',
         },
         validationSchema: validationAuthRegister,
-        onSubmit: (values) => {
-            console.log(values)
+        onSubmit: (values: IRegister) => {
+            createUser(values)
         },
     })
     return (
@@ -114,6 +118,7 @@ const Register = () => {
                             </Grid>
                         </Grid>
                         <Button
+                            disabled={isLoading}
                             type="submit"
                             fullWidth
                             variant="contained"
@@ -130,6 +135,11 @@ const Register = () => {
                             </Grid>
                         </Grid>
                     </form>
+                    {errors && (
+                        <Typography className={classes.error} variant={'h6'}>
+                            {errors}
+                        </Typography>
+                    )}
                 </div>
             </Grid>
         </Grid>
