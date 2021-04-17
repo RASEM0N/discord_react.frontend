@@ -10,11 +10,13 @@ import Typography from '@material-ui/core/Typography'
 import { Link } from 'react-router-dom'
 import { useFormik } from 'formik'
 import { validationAuthRegister } from './some/validation'
-import useStylesCustom from './some/style'
+import useStyles from './some/style'
 import { Paper } from '@material-ui/core'
 
 const Register = () => {
-    const classes = useStylesCustom('register')()
+    const classes = useStyles({
+        variant: 'register',
+    })
     const formik = useFormik({
         initialValues: {
             username: '',
