@@ -14,6 +14,11 @@ import ImageIcon from '@material-ui/icons/Image'
 import MeetingRoomIcon from '@material-ui/icons/MeetingRoom'
 import SettingsApplicationsIcon from '@material-ui/icons/SettingsApplications'
 import Avatar from '@material-ui/core/Avatar'
+import { useDispatch, useSelector } from 'react-redux'
+import { Store } from '../../../../interfaces/store'
+import { IUser } from '../../../../interfaces/user'
+import { clearCurrentUser } from '../../../../store/user/user'
+import useSingOut from '../../../../hooks/useSignOut'
 
 const useStyle = makeStyles((theme) => ({
     root: {
@@ -28,9 +33,20 @@ const useStyle = makeStyles((theme) => ({
 
 const User = () => {
     const styles = useStyle()
+    const { isLoading, signOut } = useSingOut()
+    const dispatch = useDispatch()
+    const user = useSelector<Store, IUser | null>(
+        (state) => state.user.currentUser
+    )
+
     const [open, setOpen] = useState<boolean>(true)
+
     const handleClick = () => {
         setOpen(!open)
+    }
+
+    const handleSignOut = () => {
+        signOut()
     }
 
     return (
@@ -59,7 +75,11 @@ const User = () => {
                         </ListItemIcon>
                         <ListItemText primary="Change a avatar" />
                     </ListItem>
-                    <ListItem button className={styles.nested}>
+                    <ListItem
+                        button
+                        className={styles.nested}
+                        onClick={handleSignOut}
+                    >
                         <ListItemIcon>
                             <MeetingRoomIcon />
                         </ListItemIcon>
