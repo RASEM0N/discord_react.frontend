@@ -12,8 +12,12 @@ import { useFormik } from 'formik'
 import { validationAuthLogin } from './some/validation'
 import { Paper } from '@material-ui/core'
 import useStyles from './some/style'
+import useLogin from '../../hooks/useLogin'
+import { ILogin } from '../../interfaces/auth'
 
 const Login = () => {
+    const { isLoading, errors, userAuthorization } = useLogin()
+
     const classes = useStyles({
         variant: 'login',
     })
@@ -23,8 +27,8 @@ const Login = () => {
             password: '',
         },
         validationSchema: validationAuthLogin,
-        onSubmit: (values) => {
-            console.log(values)
+        onSubmit: (values: ILogin) => {
+            userAuthorization(values)
         },
     })
     return (
@@ -93,6 +97,7 @@ const Login = () => {
                             </Grid>
                         </Grid>
                         <Button
+                            disabled={isLoading}
                             type="submit"
                             fullWidth
                             variant="contained"
@@ -109,6 +114,11 @@ const Login = () => {
                             </Grid>
                         </Grid>
                     </form>
+                    {errors && (
+                        <Typography className={classes.error} variant={'body1'}>
+                            {errors}
+                        </Typography>
+                    )}
                 </div>
             </Grid>
         </Grid>

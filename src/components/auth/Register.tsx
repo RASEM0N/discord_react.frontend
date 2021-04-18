@@ -136,7 +136,7 @@ const Register = () => {
                         </Grid>
                     </form>
                     {errors && (
-                        <Typography className={classes.error} variant={'h6'}>
+                        <Typography className={classes.error} variant={'body1'}>
                             {errors}
                         </Typography>
                     )}
