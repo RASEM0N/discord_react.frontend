@@ -17,8 +17,8 @@ import Avatar from '@material-ui/core/Avatar'
 import { useDispatch, useSelector } from 'react-redux'
 import { Store } from '../../../../interfaces/store'
 import { IUser } from '../../../../interfaces/user'
-import { clearCurrentUser } from '../../../../store/user/user'
 import useSingOut from '../../../../hooks/useSignOut'
+import Typography from '@material-ui/core/Typography'
 
 const useStyle = makeStyles((theme) => ({
     root: {
@@ -33,8 +33,7 @@ const useStyle = makeStyles((theme) => ({
 
 const User = () => {
     const styles = useStyle()
-    const { isLoading, signOut } = useSingOut()
-    const dispatch = useDispatch()
+    const { signOut } = useSingOut()
     const user = useSelector<Store, IUser | null>(
         (state) => state.user.currentUser
     )
@@ -53,22 +52,31 @@ const User = () => {
         <List component="nav" className={styles.root}>
             <ListItem button onClick={handleClick}>
                 <ListItemAvatar>
-                    <Avatar
-                        alt="Remy Sharp"
-                        src="https://cdn.awwni.me/1eq60.jpg"
-                    />
+                    <Avatar src={user?.photoURL ? user.photoURL : undefined} />
                 </ListItemAvatar>
-                <ListItemText primary="#USER" />
+                <ListItemText
+                    primary={
+                        user?.displayName ? (
+                            <Typography variant={'h6'}>
+                                {user.displayName}
+                            </Typography>
+                        ) : undefined
+                    }
+                />
                 {open ? <ExpandLess /> : <ExpandMore />}
             </ListItem>
             <Collapse in={open} timeout="auto" unmountOnExit>
                 <List component="div" disablePadding>
-                    <ListItem button className={styles.nested}>
-                        <ListItemIcon>
-                            <AccountCircleIcon />
-                        </ListItemIcon>
-                        <ListItemText primary="Signed is as #USER" />
-                    </ListItem>
+                    {/*<ListItem button className={styles.nested}>*/}
+                    {/*    <ListItemIcon>*/}
+                    {/*        <AccountCircleIcon />*/}
+                    {/*    </ListItemIcon>*/}
+                    {/*    <ListItemText*/}
+                    {/*        primary={`Signed is as ${*/}
+                    {/*            user?.displayName ? user.displayName : undefined*/}
+                    {/*        }`}*/}
+                    {/*    />*/}
+                    {/*</ListItem>*/}
                     <ListItem button className={styles.nested}>
                         <ListItemIcon>
                             <ImageIcon />
