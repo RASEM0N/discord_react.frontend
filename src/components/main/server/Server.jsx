@@ -1,9 +1,9 @@
 import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import Grid from '@material-ui/core/Grid'
-import ChannelPanel from './channel-panel/ChannelPanel'
-import MessagePanel from './messages-panel/MessagePanel'
-import InfoPanel from './info-panel/InfoPanel'
+import Channel from './channel/ChannelPanel'
+import MessagePanel from './messages/MessagePanel'
+import InfoPanel from './info/InfoPanel'
 import { AppBar } from '@material-ui/core'
 
 const useStyle = makeStyles((theme) => ({
@@ -12,15 +12,15 @@ const useStyle = makeStyles((theme) => ({
     },
 
     channel: {
-        backgroundColor: '#CDCDCD',
+        backgroundColor: '#2f3136',
     },
 
     messages: {
-        border: '3px solid white',
+        backgroundColor: '#36393f',
     },
 
     info: {
-        border: '3px solid white',
+        backgroundColor: '#2f3136',
     },
 }))
 
@@ -30,16 +30,16 @@ const Server = () => {
     return (
         <>
             <Grid container spacing={0} className={styles.root}>
-                <Grid item xs={3} className={styles.channel}>
-                    <ChannelPanel />
+                <Grid item xs={3} lg={2} className={styles.channel}>
+                    <Channel />
                 </Grid>
 
-                {/*<Grid item xs={7} className={styles.messages}>
+                <Grid item xs={7} lg={8} className={styles.messages}>
                     <MessagePanel />
                 </Grid>
-                <Grid item xs={2} className={styles.info}>
+                <Grid item xs={2} lg={2} className={styles.info}>
                     <InfoPanel />
-                </Grid>*/}
+                </Grid>
             </Grid>
         </>
     )

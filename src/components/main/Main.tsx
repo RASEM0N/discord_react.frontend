@@ -11,11 +11,11 @@ const useStyle = makeStyles((theme) => ({
     },
 
     serverPanel: {
-        backgroundColor: '#20252a',
+        backgroundColor: '#202225',
     },
 
     server: {
-        // backgroundColor: '#CDCDCD',
+        backgroundColor: '#36393f',
     },
 }))
 
