@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
+import { InitialStateUser } from '../../interfaces/user'
 
-const initialState = {
+const initialState: InitialStateUser = {
     currentUser: null,
     isLoading: true,
 }
