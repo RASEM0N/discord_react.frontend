@@ -26,5 +26,4 @@ export const fbStorage = firebase.storage()
 // references
 export const userRef = fbDatabase.ref('users')
 export const channelRef = fbDatabase.ref('channels')
-
 export default firebase

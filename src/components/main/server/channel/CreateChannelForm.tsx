@@ -6,12 +6,16 @@ import Typography from '@material-ui/core/Typography'
 
 import { useFormik } from 'formik'
 import { validationChannel } from './some/validation'
-import { IChannel } from '../../../../interfaces/channel'
+import { ChannelForm } from '../../../../interfaces/channel'
 import { makeStyles } from '@material-ui/core/styles'
 import { ButtonGroup, Container } from '@material-ui/core'
 
 import CloseIcon from '@material-ui/icons/Close'
 import AddIcon from '@material-ui/icons/Add'
+import useCreate from '../../../../hooks/useCreate'
+import { useSelector } from 'react-redux'
+import { Store } from '../../../../interfaces/store'
+import { IUser } from '../../../../interfaces/user'
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -56,6 +60,26 @@ interface Props {
 
 const CreateChannelForm: React.FC<Props> = ({ setOpenAdd }) => {
     const classes = useStyles()
+    const { isLoading, create } = useCreate()
+    const user = useSelector<Store, IUser | null>(
+        (state) => state.user.currentUser
+    )
+    const createChannel = (values: ChannelForm) => {
+        if (user) {
+            Promise.resolve(
+                create({
+                    ...values,
+                    createdBy: {
+                        date: Date.now(),
+                        avatar: user.photoURL ? user.photoURL : 'name',
+                        name: user.displayName ? user.displayName : 'image',
+                    },
+                })
+            ).then(() => {
+                if (!isLoading) setOpenAdd(false)
+            })
+        }
+    }
 
     const formik = useFormik({
         initialValues: {
@@ -63,14 +87,15 @@ const CreateChannelForm: React.FC<Props> = ({ setOpenAdd }) => {
             channelDetails: '',
         },
         validationSchema: validationChannel,
-        onSubmit: (values: IChannel) => {
-            console.log(values)
+        onSubmit: (values: ChannelForm) => {
+            createChannel(values)
         },
     })
 
     const handleClick = () => {
         setOpenAdd(false)
     }
+
     return (
         <div className={classes.root}>
             <Container
@@ -142,6 +167,7 @@ const CreateChannelForm: React.FC<Props> = ({ setOpenAdd }) => {
                             </Button>
                             <Button
                                 // disabled={isLoading}\
+                                disabled={isLoading}
                                 fullWidth
                                 type="submit"
                                 variant="contained"

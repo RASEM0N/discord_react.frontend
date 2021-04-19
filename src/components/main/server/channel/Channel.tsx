@@ -36,7 +36,6 @@ const useStyle = makeStyles((theme) => ({
 
 const Channel = () => {
     const styles = useStyle()
-
     const [open, setOpen] = useState<boolean>(true)
     const [openAdd, setOpenAdd] = useState<boolean>(false)
 
