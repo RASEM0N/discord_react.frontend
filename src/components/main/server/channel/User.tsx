@@ -25,6 +25,10 @@ const useStyle = makeStyles((theme) => ({
         width: '100%',
         maxWidth: 360,
         backgroundColor: '#292b2f',
+        color: '#4d4f53',
+        '& svg': {
+            color: '#4d4f53',
+        },
     },
     nested: {
         paddingLeft: theme.spacing(4),

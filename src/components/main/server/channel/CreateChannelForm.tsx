@@ -19,10 +19,13 @@ import { IUser } from '../../../../interfaces/user'
 
 const useStyles = makeStyles((theme) => ({
     paper: {
-        marginTop: '300px',
+        marginTop: '50%',
+        transform: 'translateY(-100%)',
         padding: 50,
         borderRadius: 20,
-        backgroundColor: '#292b2f',
+        backgroundImage: 'url(https://artfiles.alphacoders.com/117/117686.jpg)',
+        backgroundSize: 'cover',
+        color: '#292b2f',
         margin: theme.spacing(8, 8),
         display: 'flex',
         flexDirection: 'column',
@@ -35,6 +38,7 @@ const useStyles = makeStyles((theme) => ({
         width: '100%',
         backgroundColor: 'rgba(22,24,29,0.69);',
         position: 'fixed',
+        zIndex: 100,
         height: '100vh',
     },
     form: {
