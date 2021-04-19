@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
@@ -11,6 +11,10 @@ import AddIcon from '@material-ui/icons/Add'
 import LineStyleIcon from '@material-ui/icons/LineStyle'
 import RemoveIcon from '@material-ui/icons/Remove'
 import CreateChannelForm from './CreateChannelForm'
+import { channelRef } from '../../../../firebase/config'
+import { Channel as Channel1 } from '../../../../interfaces/channel'
+import { useDispatch } from 'react-redux'
+import { setCurrentChannel } from '../../../../store/channel/channel'
 
 const useStyle = makeStyles((theme) => ({
     root: {
@@ -36,8 +40,10 @@ const useStyle = makeStyles((theme) => ({
 
 const Channel = () => {
     const styles = useStyle()
+    const dispatch = useDispatch()
     const [open, setOpen] = useState<boolean>(true)
     const [openAdd, setOpenAdd] = useState<boolean>(false)
+    const [channels, setChannel] = useState<Array<Channel1>>([])
 
     const handleClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
         // @ts-ignore
@@ -50,6 +56,16 @@ const Channel = () => {
             }
         }
     }
+    // #TODO Закинуть в global store
+    useEffect(() => {
+        // @ts-ignore
+        let loadedChannels = []
+        channelRef.on('child_added', (snap) => {
+            loadedChannels.push(snap.val())
+            // @ts-ignore
+            setChannel([...channels, ...loadedChannels])
+        })
+    }, [])
 
     return (
         <List component="nav" className={styles.root}>
@@ -70,12 +86,22 @@ const Channel = () => {
 
             <Collapse in={open} timeout="auto" unmountOnExit>
                 <List component="div" disablePadding>
-                    <ListItem button className={styles.nested}>
-                        <ListItemIcon>
-                            <RemoveIcon />
-                        </ListItemIcon>
-                        <ListItemText primary="Change a avatar" />
-                    </ListItem>
+                    {channels &&
+                        channels.length > 0 &&
+                        channels.map((item) => (
+                            <ListItem
+                                button
+                                className={styles.nested}
+                                onClick={() =>
+                                    dispatch(setCurrentChannel(item))
+                                }
+                            >
+                                <ListItemIcon>
+                                    <RemoveIcon />
+                                </ListItemIcon>
+                                <ListItemText primary={item.channelName} />
+                            </ListItem>
+                        ))}
                 </List>
             </Collapse>
 
