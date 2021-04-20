@@ -47,7 +47,12 @@ const Channel = () => {
     const dispatch = useDispatch()
     const [open, setOpen] = useState<boolean>(true)
     const [openAdd, setOpenAdd] = useState<boolean>(false)
-    const [channels, setChannel] = useState<Array<Channel1>>([])
+    const [channels, setChannel] = useState<
+        Array<{
+            channel: Channel1
+            id: string
+        }>
+    >([])
 
     const handleClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
         // @ts-ignore
@@ -65,7 +70,11 @@ const Channel = () => {
         // @ts-ignore
         let loadedChannels = []
         channelRef.on('child_added', (snap) => {
-            loadedChannels.push(snap.val())
+            let channel = {
+                id: snap.key,
+                channel: snap.val(),
+            }
+            loadedChannels.push(channel)
             // @ts-ignore
             setChannel([...channels, ...loadedChannels])
         })
@@ -103,7 +112,9 @@ const Channel = () => {
                                 <ListItemIcon>
                                     <RemoveIcon />
                                 </ListItemIcon>
-                                <ListItemText primary={item.channelName} />
+                                <ListItemText
+                                    primary={item.channel.channelName}
+                                />
                             </ListItem>
                         ))}
                 </List>

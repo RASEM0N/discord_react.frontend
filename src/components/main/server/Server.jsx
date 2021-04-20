@@ -2,7 +2,7 @@ import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import Grid from '@material-ui/core/Grid'
 import Channel from './channel/ChannelPanel'
-import MessagePanel from './messages/MessagePanel'
+import MessagesPanel from './messages/MessagesPanel'
 import InfoPanel from './info/InfoPanel'
 import { AppBar } from '@material-ui/core'
 
@@ -35,7 +35,7 @@ const Server = () => {
                 </Grid>
 
                 <Grid item xs={7} lg={8} className={styles.messages}>
-                    <MessagePanel />
+                    <MessagesPanel />
                 </Grid>
                 <Grid item xs={2} lg={2} className={styles.info}>
                     <InfoPanel />

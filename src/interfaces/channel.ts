@@ -14,7 +14,10 @@ export interface Channel {
     }
 }
 
-type IChannel = firebase.User
+type IChannel = {
+    channel: Channel
+    id: string
+}
 
 export interface InitialStateChannel {
     currentChannel: null | IChannel

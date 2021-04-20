@@ -1,15 +1,19 @@
-import React from 'react'
+import React, { FC } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import { useFormik } from 'formik'
-import { Message } from '../../../../interfaces/message'
+import { MessageForm as Message } from '../../../../interfaces/message'
 import { validationMessage } from './some/validation'
-
 import Divider from '@material-ui/core/Divider'
 import IconButton from '@material-ui/core/IconButton'
 import AddCircleIcon from '@material-ui/icons/AddCircle'
 import EmojiEmotionsIcon from '@material-ui/icons/EmojiEmotions'
 import { Button } from '@material-ui/core'
 import TextField from '@material-ui/core/TextField'
+import useCreateMessage from '../../../../hooks/useCreateMessage'
+import { useSelector } from 'react-redux'
+import { Store } from '../../../../interfaces/store'
+import { IUser } from '../../../../interfaces/user'
+import { Channel as Channel1 } from '../../../../interfaces/channel'
 
 const useStyle = makeStyles((theme) => ({
     root: {
@@ -20,7 +24,6 @@ const useStyle = makeStyles((theme) => ({
         left: 20,
     },
     form: {
-        backgroundColor: '#40444b',
         color: 'white',
         borderRadius: 16,
         padding: '5px 15px',
@@ -51,8 +54,17 @@ const useStyle = makeStyles((theme) => ({
     },
 }))
 
-const MessageForm = () => {
+const MessageForm: FC<{
+    currentChannel: {
+        channel: Channel1
+        id: string
+    }
+}> = ({ currentChannel }) => {
+    const { isLoading, create } = useCreateMessage()
     const styles = useStyle()
+    const user = useSelector<Store, IUser | null>(
+        (state) => state.user.currentUser
+    )
 
     const formik = useFormik({
         initialValues: {
@@ -60,7 +72,18 @@ const MessageForm = () => {
         },
         validationSchema: validationMessage,
         onSubmit: (values: Message) => {
-            console.log(values)
+            // @ts-ignore
+            if (user && currentChannel.id) {
+                create(currentChannel.id, {
+                    content: values.message,
+                    date: Date.now(),
+                    user: {
+                        id: user.uid ? user.uid : '148822869142213',
+                        name: user.displayName ? user.displayName : 'errorName',
+                        avatar: user.photoURL ? user.photoURL : 'errorPhoto',
+                    },
+                })
+            }
         },
     })
 
@@ -95,6 +118,7 @@ const MessageForm = () => {
                     variant={'outlined'}
                     className={styles.button}
                     type={'submit'}
+                    disabled={isLoading}
                 >
                     Submit
                 </Button>

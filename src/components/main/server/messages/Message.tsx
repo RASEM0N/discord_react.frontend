@@ -7,6 +7,7 @@ import ListItemText from '@material-ui/core/ListItemText'
 import ListItemAvatar from '@material-ui/core/ListItemAvatar'
 import Avatar from '@material-ui/core/Avatar'
 import Typography from '@material-ui/core/Typography'
+import { Message as MS } from '../../../../interfaces/message'
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -31,17 +32,14 @@ const useStyles = makeStyles((theme) => ({
     },
 }))
 
-const Message = () => {
+const Message: React.FC<MS> = ({ content, user, date }) => {
     const styles = useStyles()
 
     return (
         <List className={styles.root}>
             <ListItem alignItems="flex-start">
                 <ListItemAvatar>
-                    <Avatar
-                        alt="Remy Sharp"
-                        src="https://yt3.ggpht.com/a/AATXAJyKR2Vn_4ZO4-7zsm0s3T8dOr_GkS8nBiTShg=s900-c-k-c0xffffffff-no-rj-mo"
-                    />
+                    <Avatar alt="Remy Sharp" src={user.avatar} />
                 </ListItemAvatar>
                 <ListItemText
                     primary={
@@ -50,13 +48,13 @@ const Message = () => {
                                 className={styles.user}
                                 variant={'body1'}
                             >
-                                Krivetro
+                                {user.name}
                             </Typography>{' '}
                             <Typography
                                 className={styles.date}
                                 variant={'body2'}
                             >
-                                20.04.2019
+                                {date}
                             </Typography>
                         </>
                     }
@@ -68,12 +66,7 @@ const Message = () => {
                                 color="textPrimary"
                                 className={styles.text}
                             >
-                                Lorem ipsum dolor sit amet, consectetur
-                                adipisicing elit. Ad aliquid amet atque expedita
-                                mollitia odio optio quidem saepe similique
-                                voluptates. Lorem ipsum dolor sit amet,
-                                consectetur adipisicing elit. Atque ex iste,
-                                nulla pariatur quaerat sint.
+                                {content}
                             </Typography>
                         </>
                     }
