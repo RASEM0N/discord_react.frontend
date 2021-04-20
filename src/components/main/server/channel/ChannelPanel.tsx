@@ -6,12 +6,20 @@ import Channel from './Channel'
 
 const ChannelPanel = () => {
     return (
-        <Grid container direction="column">
-            <Grid item>
-                <User />
-            </Grid>
+        <Grid
+            container
+            direction="column"
+            style={{
+                height: '100%',
+                display: 'flex',
+                justifyContent: 'space-between',
+            }}
+        >
             <Grid item>
                 <Channel />
+            </Grid>
+            <Grid item>
+                <User />
             </Grid>
         </Grid>
     )

@@ -42,7 +42,7 @@ const User = () => {
         (state) => state.user.currentUser
     )
 
-    const [open, setOpen] = useState<boolean>(true)
+    const [open, setOpen] = useState<boolean>(false)
 
     const handleClick = () => {
         setOpen(!open)
