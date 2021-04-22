@@ -1,16 +1,18 @@
-import { createSlice } from '@reduxjs/toolkit'
-import { InitialStateUser } from '../../interfaces/user'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import firebase from 'firebase/app'
 
-const initialState: InitialStateUser = {
-    currentUser: null,
+const initialState = {
+    currentUser: null as null | firebase.User,
     isLoading: true,
 }
+
+type InitialStateType = typeof initialState
 
 const userReducer = createSlice({
     name: 'currentUser',
     initialState: initialState,
     reducers: {
-        setCurrentUser: (state, { payload }) => {
+        setCurrentUser: (state, action: PayloadAction<firebase.User>) => {
             state.currentUser = payload
             state.isLoading = false
         },

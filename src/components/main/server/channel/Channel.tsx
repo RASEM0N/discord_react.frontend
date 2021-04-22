@@ -14,7 +14,7 @@ import CreateChannelForm from './CreateChannelForm'
 import { channelRef } from '../../../../firebase/config'
 import { Channel as Channel1 } from '../../../../interfaces/channel'
 import { useDispatch } from 'react-redux'
-import { setCurrentChannel } from '../../../../store/channel/channel'
+import { setCurrentChannel } from '../../../../store/channel-reducer'
 
 const useStyle = makeStyles((theme) => ({
     root: {

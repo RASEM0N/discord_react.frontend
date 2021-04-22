@@ -1,10 +1,10 @@
 import firebase from 'firebase/app'
 
-export interface ChannelForm {
+export interface ChannelFormType {
     channelName: string
     channelDetails: string
 }
-export interface Channel {
+export interface ChannelType {
     channelName: string
     channelDetails: string
     createdBy: {
@@ -15,7 +15,7 @@ export interface Channel {
 }
 
 type IChannel = {
-    channel: Channel
+    channel: ChannelType
     id: string
 }
 
