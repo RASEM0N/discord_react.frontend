@@ -1,20 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { MessageRequestType } from '../type/request'
 
-export type UserForMessageType = {
-    name: string
-    avatar: string
-    id: string
-}
-
-export type MessageType = {
-    id: string
-    content: string
-    date: number
-    user: UserForMessageType
+export type MessageTypeForState = MessageRequestType & {
+    messageId: string
 }
 
 const initialState = {
-    messages: [] as Array<MessageType>,
+    messages: [] as Array<MessageTypeForState>,
     loading: true,
 }
 
@@ -22,7 +14,10 @@ const messageReducer = createSlice({
     name: 'message',
     initialState: initialState,
     reducers: {
-        getMessages: (state, action: PayloadAction<Array<MessageType>>) => {
+        getMessages: (
+            state,
+            action: PayloadAction<Array<MessageTypeForState>>
+        ) => {
             state.messages.push(...action.payload)
             state.loading = false
         },

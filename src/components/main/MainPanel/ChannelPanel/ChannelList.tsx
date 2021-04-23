@@ -19,7 +19,7 @@ import RemoveIcon from '@material-ui/icons/Remove'
 
 import { channelRef } from '../../../../firebase/config'
 import {
-    ChannelType,
+    ChannelTypeForState,
     getCurrentChannel,
 } from '../../../../store/channel-reducer'
 import { AppDispatchType } from '../../../../store/store'
@@ -55,7 +55,7 @@ const ChannelList = () => {
     const dispatch = useDispatch<AppDispatchType>()
     const [open, setOpen] = useState<boolean>(true)
     const [openAdd, setOpenAdd] = useState<boolean>(false)
-    const [channels, setChannel] = useState<Array<ChannelType>>([])
+    const [channels, setChannel] = useState<Array<ChannelTypeForState>>([])
 
     const handleClick = (e: any) => {
         if (e.target.id === 'openModal') {
@@ -68,9 +68,9 @@ const ChannelList = () => {
     }
 
     useEffect(() => {
-        let loadedChannels: Array<ChannelType> = []
+        let loadedChannels: Array<ChannelTypeForState> = []
         channelRef.on('child_added', (snap) => {
-            let channel: ChannelType = {
+            let channel: ChannelTypeForState = {
                 id: snap.key,
                 ...snap.val(),
             }
@@ -104,7 +104,7 @@ const ChannelList = () => {
                             <ListItem
                                 button
                                 className={styles.nested}
-                                key={item.id}
+                                key={item.channelId}
                                 onClick={() =>
                                     dispatch(getCurrentChannel(item))
                                 }

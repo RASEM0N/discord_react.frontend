@@ -77,6 +77,7 @@ const ChannelForm: React.FC<Props> = ({ setOpenAdd }) => {
                         date: Date.now(),
                         avatar: user.photoURL ? user.photoURL : 'name',
                         name: user.displayName ? user.displayName : 'image',
+                        id: user.uid,
                     },
                 })
             ).then(() => {

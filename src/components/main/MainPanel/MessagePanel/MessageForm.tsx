@@ -8,7 +8,7 @@ import AddCircleIcon from '@material-ui/icons/AddCircle'
 import EmojiEmotionsIcon from '@material-ui/icons/EmojiEmotions'
 
 import useCreateMessage from '../../../../hooks/useCreateMessage'
-import { ChannelType } from '../../../../store/channel-reducer'
+import { ChannelTypeForState } from '../../../../store/channel-reducer'
 import { RootStateType } from '../../../../store/store'
 import { UserType } from '../../../../store/user-reducer'
 import { MessageFormType } from '../../../../type/form'
@@ -53,7 +53,7 @@ const useStyle = makeStyles((theme) => ({
 }))
 
 type PropsType = {
-    currentChannel: ChannelType
+    currentChannel: ChannelTypeForState
 }
 
 const MessageForm: React.FC<PropsType> = ({ currentChannel }) => {
@@ -69,22 +69,19 @@ const MessageForm: React.FC<PropsType> = ({ currentChannel }) => {
         },
         validationSchema: validationMessage,
         onSubmit: (values) => {
-            if (user && currentChannel.id) {
+            if (user) {
                 create(
                     {
                         content: values.message,
                         date: Date.now(),
-                        user: {
-                            id: user.uid ? user.uid : '148822869142213',
-                            name: user.displayName
-                                ? user.displayName
-                                : 'errorName',
-                            avatar: user.photoURL
-                                ? user.photoURL
-                                : 'errorPhoto',
+                        createdBy: {
+                            id: user.uid,
+                            avatar: user.photoURL ? user.photoURL : 'name',
+                            name: user.displayName ? user.displayName : 'image',
+                            date: Date.now(),
                         },
                     },
-                    currentChannel.id
+                    currentChannel.channelId
                 )
             }
         },

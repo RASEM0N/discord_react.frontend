@@ -23,8 +23,7 @@ const useCreateMessage = () => {
         if (isLoading && data) {
             messageRef
                 .child(itemId)
-                .push()
-                .set(data)
+                .push(data)
                 .then(() => {
                     setData(null)
                     setLoading(false)

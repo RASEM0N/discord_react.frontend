@@ -1,30 +1,28 @@
 import { useCallback, useEffect, useState } from 'react'
-import { channelRef } from '../firebase/config'
-import { ChannelRequestType } from '../type/request'
+import firebase from 'firebase/app'
 
-const useCreate = () => {
+function useDatabase<T>(reference: firebase.database.Reference) {
     const [isLoading, setLoading] = useState<boolean>(null!)
     const [errors, setErrors] = useState<any>(null)
-    const [data, setData] = useState<ChannelRequestType | null>(null)
+    const [data, setData] = useState<T | null>(null)
 
-    const create = useCallback((values: ChannelRequestType) => {
+    const create = useCallback((values: T) => {
         setData(values)
         setErrors(null)
         setLoading(true)
     }, [])
 
-    // data не нужна т.к. придет в куки
     useEffect(() => {
         if (isLoading && data) {
-            channelRef
+            reference
                 .push(data)
                 .then(() => {
-                    setData(null)
                     setLoading(false)
+                    setData(null)
                 })
                 .catch((error) => {
-                    setErrors(error)
                     setLoading(false)
+                    setErrors(error)
                 })
         }
     }, [isLoading, data])
@@ -32,4 +30,4 @@ const useCreate = () => {
     return { isLoading, errors, create }
 }
 
-export default useCreate
+export default useDatabase

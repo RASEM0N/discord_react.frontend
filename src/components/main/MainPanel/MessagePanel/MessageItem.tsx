@@ -7,7 +7,7 @@ import ListItemText from '@material-ui/core/ListItemText'
 import ListItemAvatar from '@material-ui/core/ListItemAvatar'
 import Avatar from '@material-ui/core/Avatar'
 import Typography from '@material-ui/core/Typography'
-import { MessageType } from '../../../../store/message-reducer'
+import { MessageTypeForState } from '../../../../store/message-reducer'
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -32,14 +32,18 @@ const useStyles = makeStyles((theme) => ({
     },
 }))
 
-const MessageItem: React.FC<MessageType> = ({ content, user, date }) => {
+const MessageItem: React.FC<MessageTypeForState> = ({
+    content,
+    createdBy,
+    date,
+}) => {
     const styles = useStyles()
 
     return (
         <List className={styles.root}>
             <ListItem alignItems="flex-start">
                 <ListItemAvatar>
-                    <Avatar alt="Remy Sharp" src={user.avatar} />
+                    <Avatar alt="Remy Sharp" src={createdBy.avatar} />
                 </ListItemAvatar>
                 <ListItemText
                     primary={
@@ -48,7 +52,7 @@ const MessageItem: React.FC<MessageType> = ({ content, user, date }) => {
                                 className={styles.user}
                                 variant={'body1'}
                             >
-                                {user.name}
+                                {createdBy.name}
                             </Typography>{' '}
                             <Typography
                                 className={styles.date}

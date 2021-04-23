@@ -5,8 +5,8 @@ import MessageForm from './MessageForm'
 import { useSelector } from 'react-redux'
 import { RootStateType } from '../../../../store/store'
 import { messageRef } from '../../../../firebase/config'
-import { ChannelType } from '../../../../store/channel-reducer'
-import { MessageType } from '../../../../store/message-reducer'
+import { ChannelTypeForState } from '../../../../store/channel-reducer'
+import { MessageTypeForState } from '../../../../store/message-reducer'
 
 const useStyle = makeStyles((theme) => ({
     root: {
@@ -41,17 +41,18 @@ const useStyle = makeStyles((theme) => ({
 const MessagePanel = () => {
     const styles = useStyle()
 
-    const currentChannel = useSelector<RootStateType, ChannelType | null>(
-        (state) => state.channel.currentChannel
-    )
+    const currentChannel = useSelector<
+        RootStateType,
+        ChannelTypeForState | null
+    >((state) => state.channel.currentChannel)
 
-    const [messages, setMessages] = useState<Array<MessageType>>([])
+    const [messages, setMessages] = useState<Array<MessageTypeForState>>([])
 
     useEffect(() => {
         if (!currentChannel) return
-        let loadedMessages: Array<MessageType> = []
-        messageRef.child(currentChannel.id).on('child_added', (snap) => {
-            let channel: MessageType = {
+        let loadedMessages: Array<MessageTypeForState> = []
+        messageRef.child(currentChannel.channelId).on('child_added', (snap) => {
+            let channel: MessageTypeForState = {
                 id: snap.key,
                 ...snap.val(),
             }
@@ -69,7 +70,12 @@ const MessagePanel = () => {
                         {messages &&
                             messages.length > 0 &&
                             messages.map((item) => {
-                                return <MessageItem key={item.id} {...item} />
+                                return (
+                                    <MessageItem
+                                        key={item.messageId}
+                                        {...item}
+                                    />
+                                )
                             })}
                     </div>
 
