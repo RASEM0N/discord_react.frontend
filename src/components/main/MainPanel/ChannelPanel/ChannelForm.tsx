@@ -12,10 +12,12 @@ import { ButtonGroup, Container } from '@material-ui/core'
 
 import CloseIcon from '@material-ui/icons/Close'
 import AddIcon from '@material-ui/icons/Add'
-import useCreate from '../../../../hooks/useCreate'
 import { useSelector } from 'react-redux'
 import { RootStateType } from '../../../../store/store'
 import { UserType } from '../../../../store/user-reducer'
+import useAddToDatabase from '../../../../hooks/useAddToDatabase'
+import { channelRef } from '../../../../firebase/config'
+import { ChannelRequestType } from '../../../../type/request'
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -64,7 +66,9 @@ interface Props {
 
 const ChannelForm: React.FC<Props> = ({ setOpenAdd }) => {
     const classes = useStyles()
-    const { isLoading, create } = useCreate()
+    const { isLoading, create } = useAddToDatabase<ChannelRequestType>(
+        channelRef
+    )
     const user = useSelector<RootStateType, UserType | null>(
         (state) => state.user.currentUser
     )

@@ -7,11 +7,13 @@ import { Button, Divider, TextField, IconButton } from '@material-ui/core'
 import AddCircleIcon from '@material-ui/icons/AddCircle'
 import EmojiEmotionsIcon from '@material-ui/icons/EmojiEmotions'
 
-import useCreateMessage from '../../../../hooks/useCreateMessage'
 import { ChannelTypeForState } from '../../../../store/channel-reducer'
 import { RootStateType } from '../../../../store/store'
 import { UserType } from '../../../../store/user-reducer'
 import { MessageFormType } from '../../../../type/form'
+import useAddToDatabase from '../../../../hooks/useAddToDatabase'
+import { messageRef } from '../../../../firebase/config'
+import { MessageRequestType } from '../../../../type/request'
 
 const useStyle = makeStyles((theme) => ({
     root: {
@@ -57,7 +59,9 @@ type PropsType = {
 }
 
 const MessageForm: React.FC<PropsType> = ({ currentChannel }) => {
-    const { isLoading, create } = useCreateMessage()
+    const { isLoading, create } = useAddToDatabase<MessageRequestType>(
+        messageRef.child(currentChannel.channelId)
+    )
     const styles = useStyle()
     const user = useSelector<RootStateType, UserType | null>(
         (state) => state.user.currentUser
@@ -70,18 +74,15 @@ const MessageForm: React.FC<PropsType> = ({ currentChannel }) => {
         validationSchema: validationMessage,
         onSubmit: (values) => {
             if (user) {
-                create(
-                    {
-                        content: values.message,
-                        createdBy: {
-                            id: user.uid,
-                            avatar: user.photoURL ? user.photoURL : 'name',
-                            name: user.displayName ? user.displayName : 'image',
-                            date: Date.now(),
-                        },
+                create({
+                    content: values.message,
+                    createdBy: {
+                        id: user.uid,
+                        avatar: user.photoURL ? user.photoURL : 'name',
+                        name: user.displayName ? user.displayName : 'image',
+                        date: Date.now(),
                     },
-                    currentChannel.channelId
-                )
+                })
             }
         },
     })
