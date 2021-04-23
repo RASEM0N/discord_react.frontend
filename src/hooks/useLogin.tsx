@@ -1,19 +1,18 @@
 import { useCallback, useEffect, useState } from 'react'
 import { fbAuth } from '../firebase/config'
-import { ILogin } from '../type/form'
+import { LoginFormType } from '../type/form'
 
 const useLogin = () => {
     const [isLoading, setLoading] = useState<boolean>(null!)
     const [errors, setErrors] = useState<any>(null)
-    const [userData, setUserData] = useState<ILogin | null>(null)
+    const [userData, setUserData] = useState<LoginFormType | null>(null)
 
-    const userAuthorization = useCallback((data: ILogin) => {
+    const userAuthorization = useCallback((data: LoginFormType) => {
         setUserData(data)
         setErrors(null)
         setLoading(true)
     }, [])
 
-    // data не нужна т.к. придет в куки
     useEffect(() => {
         if (isLoading && userData) {
             fbAuth

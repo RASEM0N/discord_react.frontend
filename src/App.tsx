@@ -4,13 +4,15 @@ import { fbAuth } from './firebase/config'
 import { useHistory } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { setCurrentUser, clearCurrentUser } from './store/user-reducer'
-import { Store } from './type/store'
 import Spinner from './components/common/spinner/Spinner'
+import { AppDispatchType, RootStateType } from './store/store'
 
 const App = () => {
     const history = useHistory()
-    const dispatch = useDispatch()
-    const loading = useSelector<Store, boolean>((state) => state.user.isLoading)
+    const dispatch = useDispatch<AppDispatchType>()
+    const loading = useSelector<RootStateType, boolean>(
+        (state) => state.user.isLoading
+    )
 
     useEffect(() => {
         fbAuth.onAuthStateChanged((user) => {

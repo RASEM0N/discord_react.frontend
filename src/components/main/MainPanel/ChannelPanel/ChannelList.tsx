@@ -50,7 +50,7 @@ const useStyle = makeStyles((theme) => ({
     },
 }))
 
-const ChannelItem = () => {
+const ChannelList = () => {
     const styles = useStyle()
     const dispatch = useDispatch<AppDispatchType>()
     const [open, setOpen] = useState<boolean>(true)
@@ -85,7 +85,7 @@ const ChannelItem = () => {
                 <ListItemIcon>
                     <LineStyleIcon />
                 </ListItemIcon>
-                <ListItemText primary={'ChannelItem name'} />
+                <ListItemText primary={'ChannelList name'} />
                 {open ? (
                     <ExpandLess id={'openModal'} />
                 ) : (
@@ -104,6 +104,7 @@ const ChannelItem = () => {
                             <ListItem
                                 button
                                 className={styles.nested}
+                                key={item.id}
                                 onClick={() =>
                                     dispatch(getCurrentChannel(item))
                                 }
@@ -122,4 +123,4 @@ const ChannelItem = () => {
     )
 }
 
-export default ChannelItem
+export default ChannelList

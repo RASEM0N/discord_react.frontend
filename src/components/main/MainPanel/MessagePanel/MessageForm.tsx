@@ -70,15 +70,22 @@ const MessageForm: React.FC<PropsType> = ({ currentChannel }) => {
         validationSchema: validationMessage,
         onSubmit: (values) => {
             if (user && currentChannel.id) {
-                create(currentChannel.id, {
-                    content: values.message,
-                    date: Date.now(),
-                    user: {
-                        id: user.uid ? user.uid : '148822869142213',
-                        name: user.displayName ? user.displayName : 'errorName',
-                        avatar: user.photoURL ? user.photoURL : 'errorPhoto',
+                create(
+                    {
+                        content: values.message,
+                        date: Date.now(),
+                        user: {
+                            id: user.uid ? user.uid : '148822869142213',
+                            name: user.displayName
+                                ? user.displayName
+                                : 'errorName',
+                            avatar: user.photoURL
+                                ? user.photoURL
+                                : 'errorPhoto',
+                        },
                     },
-                })
+                    currentChannel.id
+                )
             }
         },
     })

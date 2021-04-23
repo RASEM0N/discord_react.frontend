@@ -1,8 +1,7 @@
 import React from 'react'
-import { makeStyles } from '@material-ui/core/styles'
 import { Grid } from '@material-ui/core'
 import UserMenu from './UserMenu'
-import ChannelItem from './ChannelItem'
+import ChannelList from './ChannelList'
 
 const ChannelPanel = () => {
     return (
@@ -16,7 +15,7 @@ const ChannelPanel = () => {
             }}
         >
             <Grid item>
-                <ChannelItem />
+                <ChannelList />
             </Grid>
             <Grid item>
                 <UserMenu />

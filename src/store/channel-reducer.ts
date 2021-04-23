@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-type CreateByType = {
+export type CreateByType = {
     avatar: string
     date: number
     name: string

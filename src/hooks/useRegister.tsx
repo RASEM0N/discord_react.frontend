@@ -1,13 +1,13 @@
 import { useCallback, useEffect, useState } from 'react'
 import firebase, { fbAuth, userRef } from '../firebase/config'
-import { IRegister } from '../type/form'
+import { RegisterFormType } from '../type/form'
 
 const useRegister = () => {
     const [isLoading, setLoading] = useState<boolean>(null!)
     const [errors, setErrors] = useState<any>(null)
-    const [userData, setUserData] = useState<IRegister | null>(null)
+    const [userData, setUserData] = useState<RegisterFormType | null>(null)
 
-    const createUser = useCallback((data: IRegister) => {
+    const createUser = useCallback((data: RegisterFormType) => {
         setUserData(data)
         setErrors(null)
         setLoading(true)
@@ -28,7 +28,6 @@ const useRegister = () => {
     // data не нужна т.к. придет в куки
     useEffect(() => {
         if (isLoading && userData) {
-            console.log('внутри')
             fbAuth
                 .createUserWithEmailAndPassword(
                     userData.email,
@@ -38,7 +37,8 @@ const useRegister = () => {
                     createdUser.user
                         ?.updateProfile({
                             displayName: userData.username,
-                            photoURL: 'https://picsum.photos/300',
+                            photoURL:
+                                'https://www.wallpapermaiden.com/wallpaper/32302/download/3840x2160/yumemi-riamu-the-idolmaster-cinderella-girls-pink-hair.jpeg',
                         })
                         .then(() => {
                             saveUserToDatabase(createdUser)

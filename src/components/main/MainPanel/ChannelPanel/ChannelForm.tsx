@@ -126,7 +126,7 @@ const ChannelForm: React.FC<Props> = ({ setOpenAdd }) => {
                                     type="text"
                                     required
                                     fullWidth
-                                    label="Name of ChannelItem"
+                                    label="Name of ChannelList"
                                     error={
                                         formik.touched.channelName &&
                                         Boolean(formik.errors.channelName)
@@ -145,7 +145,7 @@ const ChannelForm: React.FC<Props> = ({ setOpenAdd }) => {
                                     variant="outlined"
                                     required
                                     fullWidth
-                                    label="Details of ChannelItem"
+                                    label="Details of ChannelList"
                                     type="text"
                                     error={
                                         formik.touched.channelDetails &&
