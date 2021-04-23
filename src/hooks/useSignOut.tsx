@@ -8,11 +8,9 @@ const useSingOut = () => {
         setLoading(true)
     }, [])
 
-    // data не нужна т.к. придет в куки
     useEffect(() => {
         if (isLoading) {
             fbAuth.signOut().then(() => {
-                console.log('sign out')
                 setLoading(false)
             })
         }

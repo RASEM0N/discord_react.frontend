@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react'
 import firebase, { fbAuth, userRef } from '../firebase/config'
-import { IRegister } from '../interfaces/auth'
+import { IRegister } from '../type/form'
 
 const useRegister = () => {
     const [isLoading, setLoading] = useState<boolean>(null!)

@@ -1,5 +1,10 @@
 import { makeStyles } from '@material-ui/core/styles'
 
+export enum AuthVariantEnum {
+    login = 'login',
+    register = 'register',
+}
+
 const useStyles = makeStyles((theme) => ({
     image: {
         backgroundImage: 'url(https://source.unsplash.com/random)',
@@ -19,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
     },
     avatar: {
         margin: theme.spacing(1),
-        backgroundColor: ({ variant }: { variant: 'login' | 'register' }) =>
+        backgroundColor: ({ variant }: { variant: AuthVariantEnum }) =>
             variant === 'login' ? '#29b297' : '#27509e',
     },
     form: {
@@ -28,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
     },
     submit: {
         margin: theme.spacing(3, 0, 2),
-        backgroundColor: ({ variant }: { variant: 'login' | 'register' }) =>
+        backgroundColor: ({ variant }: { variant: AuthVariantEnum }) =>
             variant === 'login' ? '#29b297' : '#27509e',
     },
     link: {

@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react'
 import { channelRef } from '../firebase/config'
-import { Channel } from '../interfaces/channel'
+import { Channel } from '../type/channel'
 
 const useCreate = () => {
     const [isLoading, setLoading] = useState<boolean>(null!)

@@ -1,8 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import firebase from 'firebase/app'
 
+export type UserType = firebase.User
+
 const initialState = {
-    currentUser: null as null | firebase.User,
+    currentUser: null as null | UserType,
     isLoading: true,
 }
 

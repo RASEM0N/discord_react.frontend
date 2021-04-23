@@ -7,7 +7,7 @@ import ListItemText from '@material-ui/core/ListItemText'
 import ListItemAvatar from '@material-ui/core/ListItemAvatar'
 import Avatar from '@material-ui/core/Avatar'
 import Typography from '@material-ui/core/Typography'
-import { Message as MS } from '../../../../interfaces/message'
+import { MessageType } from '../../../../store/message-reducer'
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }))
 
-const Message: React.FC<MS> = ({ content, user, date }) => {
+const MessageItem: React.FC<MessageType> = ({ content, user, date }) => {
     const styles = useStyles()
 
     return (
@@ -76,4 +76,4 @@ const Message: React.FC<MS> = ({ content, user, date }) => {
         </List>
     )
 }
-export default Message
+export default MessageItem

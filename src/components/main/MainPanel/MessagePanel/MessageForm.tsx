@@ -1,19 +1,17 @@
-import React, { FC } from 'react'
+import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import { useFormik } from 'formik'
-import { MessageForm as Message } from '../../../../interfaces/message'
-import { validationMessage } from './some/validation'
-import Divider from '@material-ui/core/Divider'
-import IconButton from '@material-ui/core/IconButton'
+import { validationMessage } from './utils/validation'
+import { useSelector } from 'react-redux'
+import { Button, Divider, TextField, IconButton } from '@material-ui/core'
 import AddCircleIcon from '@material-ui/icons/AddCircle'
 import EmojiEmotionsIcon from '@material-ui/icons/EmojiEmotions'
-import { Button } from '@material-ui/core'
-import TextField from '@material-ui/core/TextField'
+
 import useCreateMessage from '../../../../hooks/useCreateMessage'
-import { useSelector } from 'react-redux'
-import { Store } from '../../../../interfaces/store'
-import { IUser } from '../../../../interfaces/user'
-import { Channel as Channel1 } from '../../../../interfaces/channel'
+import { ChannelType } from '../../../../store/channel-reducer'
+import { RootStateType } from '../../../../store/store'
+import { UserType } from '../../../../store/user-reducer'
+import { MessageFormType } from '../../../../type/form'
 
 const useStyle = makeStyles((theme) => ({
     root: {
@@ -54,25 +52,23 @@ const useStyle = makeStyles((theme) => ({
     },
 }))
 
-const MessageForm: FC<{
-    currentChannel: {
-        channel: Channel1
-        id: string
-    }
-}> = ({ currentChannel }) => {
+type PropsType = {
+    currentChannel: ChannelType
+}
+
+const MessageForm: React.FC<PropsType> = ({ currentChannel }) => {
     const { isLoading, create } = useCreateMessage()
     const styles = useStyle()
-    const user = useSelector<Store, IUser | null>(
+    const user = useSelector<RootStateType, UserType | null>(
         (state) => state.user.currentUser
     )
 
-    const formik = useFormik({
+    const formik = useFormik<MessageFormType>({
         initialValues: {
             message: '',
         },
         validationSchema: validationMessage,
-        onSubmit: (values: Message) => {
-            // @ts-ignore
+        onSubmit: (values) => {
             if (user && currentChannel.id) {
                 create(currentChannel.id, {
                     content: values.message,
@@ -99,7 +95,7 @@ const MessageForm: FC<{
                 </IconButton>
                 <TextField
                     className={styles.input}
-                    placeholder="Message ..."
+                    placeholder="MessageItem ..."
                     required
                     name="message"
                     value={formik.values.message}

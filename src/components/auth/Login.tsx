@@ -9,20 +9,20 @@ import {
     TextField,
     Grid,
     Typography,
-    Paper
+    Paper,
 } from '@material-ui/core'
 import LockOpenOutlinedIcon from '@material-ui/icons/LockOpenOutlined'
 
-import { validationAuthLogin } from './some/validation'
-import useStyles from './some/style'
+import { validationAuthLogin } from './utils/validation'
+import useStyles, { AuthVariantEnum } from './utils/style'
 import useLogin from '../../hooks/useLogin'
-import { LoginFormType } from '../../interfaces/auth'
+import { LoginFormType } from '../../type/form'
 
 const Login = () => {
     const { isLoading, errors, userAuthorization } = useLogin()
 
     const classes = useStyles({
-        variant: 'login',
+        variant: AuthVariantEnum.login,
     })
     const formik = useFormik<LoginFormType>({
         initialValues: {

@@ -6,7 +6,7 @@ type CreateByType = {
     name: string
 }
 
-type ChannelType = {
+export type ChannelType = {
     id: string
     channelDetails: string
     channelName: string

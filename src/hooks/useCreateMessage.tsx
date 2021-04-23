@@ -1,6 +1,6 @@
 import { messageRef } from '../firebase/config'
 import { useCallback, useEffect, useState } from 'react'
-import { Message } from '../interfaces/message'
+import { Message } from '../type/message'
 
 const useCreateMessage = () => {
     const [isLoading, setLoading] = useState<boolean>(null!)

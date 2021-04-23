@@ -1,6 +1,7 @@
 import * as yup from 'yup'
+import { AuthVariantEnum } from './style'
 
-const validationAuth = (variant: 'login' | 'register') =>
+const validationAuth = (variant: AuthVariantEnum) =>
     yup.object({
         username:
             variant === 'register'
@@ -23,5 +24,5 @@ const validationAuth = (variant: 'login' | 'register') =>
     })
 export default validationAuth
 
-export const validationAuthLogin = validationAuth('login')
-export const validationAuthRegister = validationAuth('register')
+export const validationAuthLogin = validationAuth(AuthVariantEnum.login)
+export const validationAuthRegister = validationAuth(AuthVariantEnum.register)

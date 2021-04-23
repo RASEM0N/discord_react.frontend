@@ -4,7 +4,7 @@ import { fbAuth } from './firebase/config'
 import { useHistory } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { setCurrentUser, clearCurrentUser } from './store/user-reducer'
-import { Store } from './interfaces/store'
+import { Store } from './type/store'
 import Spinner from './components/common/spinner/Spinner'
 
 const App = () => {

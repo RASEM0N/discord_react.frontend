@@ -1,9 +1,9 @@
 import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import Grid from '@material-ui/core/Grid'
-import Channel from './channel/ChannelPanel'
-import MessagesPanel from './messages/MessagesPanel'
-import InfoPanel from './info/InfoPanel'
+import Channel from './ChannelPanel/ChannelPanel'
+import MessagePanel from './MessagePanel/MessagePanel'
+import InfoPanel from './InfoPanel/InfoPanel'
 import { AppBar } from '@material-ui/core'
 
 const useStyle = makeStyles((theme) => ({
@@ -24,7 +24,7 @@ const useStyle = makeStyles((theme) => ({
     },
 }))
 
-const Server = () => {
+const MainPanel = () => {
     const styles = useStyle()
 
     return (
@@ -35,7 +35,7 @@ const Server = () => {
                 </Grid>
 
                 <Grid item xs={7} lg={8} className={styles.messages}>
-                    <MessagesPanel />
+                    <MessagePanel />
                 </Grid>
                 <Grid item xs={2} lg={2} className={styles.info}>
                     <InfoPanel />
@@ -45,4 +45,4 @@ const Server = () => {
     )
 }
 
-export default Server
+export default MainPanel

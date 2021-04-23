@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
-import Messages from './Message'
+import MessageItem from './MessageItem'
 import MessageForm from './MessageForm'
 import { useSelector } from 'react-redux'
-import { Store } from '../../../../interfaces/store'
-import { Channel } from '../../../../interfaces/channel'
-import { channelRef, messageRef } from '../../../../firebase/config'
-import { Message } from '../../../../interfaces/message'
+import { RootStateType } from '../../../../store/store'
+import { messageRef } from '../../../../firebase/config'
+import { ChannelType } from '../../../../store/channel-reducer'
+import { MessageType } from '../../../../store/message-reducer'
 
 const useStyle = makeStyles((theme) => ({
     root: {
@@ -38,42 +38,28 @@ const useStyle = makeStyles((theme) => ({
     },
 }))
 
-const MessagesPanel = () => {
+const MessagePanel = () => {
     const styles = useStyle()
 
-    const currentChannel = useSelector<
-        Store,
-        {
-            id: string
-            channel: Channel
-        } | null
-    >((state) => state.channel.currentChannel)
+    const currentChannel = useSelector<RootStateType, ChannelType | null>(
+        (state) => state.channel.currentChannel
+    )
 
-    const [messages, setMessages] = useState<
-        Array<{
-            id: string
-            message: Message
-        }>
-    >([])
+    const [messages, setMessages] = useState<Array<MessageType>>([])
 
     useEffect(() => {
         if (!currentChannel) return
-        // @ts-ignore
-        let loadedMessages = []
-        // @ts-ignore
+        let loadedMessages: Array<MessageType> = []
         messageRef.child(currentChannel.id).on('child_added', (snap) => {
-            let channel = {
+            let channel: MessageType = {
                 id: snap.key,
-                message: snap.val(),
+                ...snap.val(),
             }
             loadedMessages.push(channel)
             console.log(channel)
-            // @ts-ignore
             setMessages([...messages, ...loadedMessages])
         })
     }, [currentChannel])
-
-    console.log(messages)
 
     return (
         <div className={styles.root}>
@@ -83,10 +69,7 @@ const MessagesPanel = () => {
                         {messages &&
                             messages.length > 0 &&
                             messages.map((item) => {
-                                console.log('1')
-                                return (
-                                    <Messages key={item.id} {...item.message} />
-                                )
+                                return <MessageItem key={item.id} {...item} />
                             })}
                     </div>
 
@@ -97,4 +80,4 @@ const MessagesPanel = () => {
     )
 }
 
-export default MessagesPanel
+export default MessagePanel

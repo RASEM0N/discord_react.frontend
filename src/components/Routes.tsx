@@ -7,7 +7,7 @@ import Main from './main/Main'
 const Routes = () => {
     return (
         <Switch>
-            <Route exact={true} path="/" component={() => <Main />} />
+            <Route exact path="/" component={Main} />
             <Route exact path="/login" component={Login} />
             <Route exact path="/register" component={Register} />
         </Switch>

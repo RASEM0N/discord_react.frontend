@@ -1,9 +1,8 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 import { Grid } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
-import ServerPanel from './server-panel/ServerPanel'
-import Server from './server/Server'
+import ServerPanel from './ServerPanel/ServerPanel'
+import MainPanel from './MainPanel/MainPanel'
 
 const useStyle = makeStyles((theme) => ({
     root: {
@@ -28,7 +27,7 @@ function Main() {
                 <ServerPanel />
             </Grid>
             <Grid item xs={11} className={styles.server}>
-                <Server />
+                <MainPanel />
             </Grid>
         </Grid>
     )

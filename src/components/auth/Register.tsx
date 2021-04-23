@@ -14,16 +14,16 @@ import {
     Paper,
 } from '@material-ui/core'
 
-import { validationAuthRegister } from './some/validation'
-import useStyles from './some/style'
-import { RegisterFormType } from '../../interfaces/auth'
+import { validationAuthRegister } from './utils/validation'
+import useStyles, { AuthVariantEnum } from './utils/style'
+import { RegisterFormType } from '../../type/form'
 import useRegister from '../../hooks/useRegister'
 
 const Register = () => {
     const { isLoading, errors, createUser } = useRegister()
 
     const classes = useStyles({
-        variant: 'register',
+        variant: AuthVariantEnum.register,
     })
     const formik = useFormik<RegisterFormType>({
         initialValues: {

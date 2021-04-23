@@ -1,24 +1,27 @@
 import React, { useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
-import List from '@material-ui/core/List'
-import ListItem from '@material-ui/core/ListItem'
-import ListItemIcon from '@material-ui/core/ListItemIcon'
-import ListItemText from '@material-ui/core/ListItemText'
-import Collapse from '@material-ui/core/Collapse'
-import ListItemAvatar from '@material-ui/core/ListItemAvatar'
+import { useSelector } from 'react-redux'
+
+import {
+    List,
+    ListItem,
+    ListItemIcon,
+    ListItemText,
+    Collapse,
+    ListItemAvatar,
+    Typography,
+    Avatar,
+} from '@material-ui/core'
+
 import ExpandLess from '@material-ui/icons/ExpandLess'
 import ExpandMore from '@material-ui/icons/ExpandMore'
-
-import AccountCircleIcon from '@material-ui/icons/AccountCircle'
 import ImageIcon from '@material-ui/icons/Image'
-import MeetingRoomIcon from '@material-ui/icons/MeetingRoom'
 import SettingsApplicationsIcon from '@material-ui/icons/SettingsApplications'
-import Avatar from '@material-ui/core/Avatar'
-import { useDispatch, useSelector } from 'react-redux'
-import { Store } from '../../../../interfaces/store'
-import { IUser } from '../../../../interfaces/user'
+import MeetingRoomIcon from '@material-ui/icons/MeetingRoom'
+
 import useSingOut from '../../../../hooks/useSignOut'
-import Typography from '@material-ui/core/Typography'
+import { RootStateType } from '../../../../store/store'
+import { UserType } from '../../../../store/user-reducer'
 
 const useStyle = makeStyles((theme) => ({
     root: {
@@ -35,10 +38,10 @@ const useStyle = makeStyles((theme) => ({
     },
 }))
 
-const User = () => {
+const UserMenu = () => {
     const styles = useStyle()
     const { signOut } = useSingOut()
-    const user = useSelector<Store, IUser | null>(
+    const user = useSelector<RootStateType, UserType | null>(
         (state) => state.user.currentUser
     )
 
@@ -109,4 +112,4 @@ const User = () => {
     )
 }
 
-export default User
+export default UserMenu

@@ -1,20 +1,28 @@
 import React, { useEffect, useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
-import List from '@material-ui/core/List'
-import ListItem from '@material-ui/core/ListItem'
-import ListItemIcon from '@material-ui/core/ListItemIcon'
-import ListItemText from '@material-ui/core/ListItemText'
-import Collapse from '@material-ui/core/Collapse'
+import { useDispatch } from 'react-redux'
+import ChannelForm from './ChannelForm'
+
+import {
+    List,
+    ListItem,
+    ListItemIcon,
+    ListItemText,
+    Collapse,
+} from '@material-ui/core'
+
 import ExpandLess from '@material-ui/icons/ExpandLess'
 import ExpandMore from '@material-ui/icons/ExpandMore'
 import AddIcon from '@material-ui/icons/Add'
 import LineStyleIcon from '@material-ui/icons/LineStyle'
 import RemoveIcon from '@material-ui/icons/Remove'
-import CreateChannelForm from './CreateChannelForm'
+
 import { channelRef } from '../../../../firebase/config'
-import { Channel as Channel1 } from '../../../../interfaces/channel'
-import { useDispatch } from 'react-redux'
-import { setCurrentChannel } from '../../../../store/channel-reducer'
+import {
+    ChannelType,
+    getCurrentChannel,
+} from '../../../../store/channel-reducer'
+import { AppDispatchType } from '../../../../store/store'
 
 const useStyle = makeStyles((theme) => ({
     root: {
@@ -42,40 +50,31 @@ const useStyle = makeStyles((theme) => ({
     },
 }))
 
-const Channel = () => {
+const ChannelItem = () => {
     const styles = useStyle()
-    const dispatch = useDispatch()
+    const dispatch = useDispatch<AppDispatchType>()
     const [open, setOpen] = useState<boolean>(true)
     const [openAdd, setOpenAdd] = useState<boolean>(false)
-    const [channels, setChannel] = useState<
-        Array<{
-            channel: Channel1
-            id: string
-        }>
-    >([])
+    const [channels, setChannel] = useState<Array<ChannelType>>([])
 
-    const handleClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-        // @ts-ignore
+    const handleClick = (e: any) => {
         if (e.target.id === 'openModal') {
             setOpen(!open)
         } else {
-            // @ts-ignore
             if (e.target.id === 'openAdd') {
                 setOpenAdd(true)
             }
         }
     }
-    // #TODO Закинуть в global store
+
     useEffect(() => {
-        // @ts-ignore
-        let loadedChannels = []
+        let loadedChannels: Array<ChannelType> = []
         channelRef.on('child_added', (snap) => {
-            let channel = {
+            let channel: ChannelType = {
                 id: snap.key,
-                channel: snap.val(),
+                ...snap.val(),
             }
             loadedChannels.push(channel)
-            // @ts-ignore
             setChannel([...channels, ...loadedChannels])
         })
     }, [])
@@ -86,7 +85,7 @@ const Channel = () => {
                 <ListItemIcon>
                     <LineStyleIcon />
                 </ListItemIcon>
-                <ListItemText primary={'Channel name'} />
+                <ListItemText primary={'ChannelItem name'} />
                 {open ? (
                     <ExpandLess id={'openModal'} />
                 ) : (
@@ -106,23 +105,21 @@ const Channel = () => {
                                 button
                                 className={styles.nested}
                                 onClick={() =>
-                                    dispatch(setCurrentChannel(item))
+                                    dispatch(getCurrentChannel(item))
                                 }
                             >
                                 <ListItemIcon>
                                     <RemoveIcon />
                                 </ListItemIcon>
-                                <ListItemText
-                                    primary={item.channel.channelName}
-                                />
+                                <ListItemText primary={item.channelName} />
                             </ListItem>
                         ))}
                 </List>
             </Collapse>
 
-            {openAdd && <CreateChannelForm setOpenAdd={setOpenAdd} />}
+            {openAdd && <ChannelForm setOpenAdd={setOpenAdd} />}
         </List>
     )
 }
 
-export default Channel
+export default ChannelItem

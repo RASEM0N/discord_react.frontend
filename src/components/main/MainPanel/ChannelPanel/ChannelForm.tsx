@@ -5,8 +5,8 @@ import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 
 import { useFormik } from 'formik'
-import { validationChannel } from './some/validation'
-import { ChannelForm } from '../../../../interfaces/channel'
+import { validationChannel } from './utils/validation'
+import { ChannelFormType } from '../../../../type/form'
 import { makeStyles } from '@material-ui/core/styles'
 import { ButtonGroup, Container } from '@material-ui/core'
 
@@ -14,8 +14,8 @@ import CloseIcon from '@material-ui/icons/Close'
 import AddIcon from '@material-ui/icons/Add'
 import useCreate from '../../../../hooks/useCreate'
 import { useSelector } from 'react-redux'
-import { Store } from '../../../../interfaces/store'
-import { IUser } from '../../../../interfaces/user'
+import { RootStateType } from '../../../../store/store'
+import { UserType } from '../../../../store/user-reducer'
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -62,13 +62,13 @@ interface Props {
     setOpenAdd: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const CreateChannelForm: React.FC<Props> = ({ setOpenAdd }) => {
+const ChannelForm: React.FC<Props> = ({ setOpenAdd }) => {
     const classes = useStyles()
     const { isLoading, create } = useCreate()
-    const user = useSelector<Store, IUser | null>(
+    const user = useSelector<RootStateType, UserType | null>(
         (state) => state.user.currentUser
     )
-    const createChannel = (values: ChannelForm) => {
+    const createChannel = (values: ChannelFormType) => {
         if (user) {
             Promise.resolve(
                 create({
@@ -85,13 +85,13 @@ const CreateChannelForm: React.FC<Props> = ({ setOpenAdd }) => {
         }
     }
 
-    const formik = useFormik({
+    const formik = useFormik<ChannelFormType>({
         initialValues: {
             channelName: '',
             channelDetails: '',
         },
         validationSchema: validationChannel,
-        onSubmit: (values: ChannelForm) => {
+        onSubmit: (values) => {
             createChannel(values)
         },
     })
@@ -126,7 +126,7 @@ const CreateChannelForm: React.FC<Props> = ({ setOpenAdd }) => {
                                     type="text"
                                     required
                                     fullWidth
-                                    label="Name of Channel"
+                                    label="Name of ChannelItem"
                                     error={
                                         formik.touched.channelName &&
                                         Boolean(formik.errors.channelName)
@@ -145,7 +145,7 @@ const CreateChannelForm: React.FC<Props> = ({ setOpenAdd }) => {
                                     variant="outlined"
                                     required
                                     fullWidth
-                                    label="Details of Channel"
+                                    label="Details of ChannelItem"
                                     type="text"
                                     error={
                                         formik.touched.channelDetails &&
@@ -194,4 +194,4 @@ const CreateChannelForm: React.FC<Props> = ({ setOpenAdd }) => {
     )
 }
 
-export default CreateChannelForm
+export default ChannelForm

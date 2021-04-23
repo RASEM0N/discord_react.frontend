@@ -1,16 +1,16 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-type UserType = {
+export type UserForMessageType = {
     name: string
     avatar: string
     id: string
 }
 
-type MessageType = {
+export type MessageType = {
     id: string
     content: string
     date: number
-    user: UserType
+    user: UserForMessageType
 }
 
 const initialState = {
