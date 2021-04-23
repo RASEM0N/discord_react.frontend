@@ -9,10 +9,11 @@ export type CreateByType = {
 
 export type MessageRequestType = {
     content: string
-    date: number
     createdBy: CreateByType
 }
 
 export type ChannelRequestType = ChannelFormType & {
     createdBy: CreateByType
 }
+
+export type RequestType = MessageRequestType | ChannelRequestType

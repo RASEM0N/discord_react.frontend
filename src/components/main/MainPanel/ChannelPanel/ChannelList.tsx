@@ -71,7 +71,7 @@ const ChannelList = () => {
         let loadedChannels: Array<ChannelTypeForState> = []
         channelRef.on('child_added', (snap) => {
             let channel: ChannelTypeForState = {
-                id: snap.key,
+                channelId: snap.key,
                 ...snap.val(),
             }
             loadedChannels.push(channel)

@@ -53,7 +53,7 @@ const MessagePanel = () => {
         let loadedMessages: Array<MessageTypeForState> = []
         messageRef.child(currentChannel.channelId).on('child_added', (snap) => {
             let channel: MessageTypeForState = {
-                id: snap.key,
+                messageId: snap.key,
                 ...snap.val(),
             }
             loadedMessages.push(channel)

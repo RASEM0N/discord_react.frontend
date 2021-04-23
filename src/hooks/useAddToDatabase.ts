@@ -1,7 +1,10 @@
 import { useCallback, useEffect, useState } from 'react'
 import firebase from 'firebase/app'
+import { RequestType } from '../type/request'
 
-function useDatabase<T>(reference: firebase.database.Reference) {
+function useDatabase<T extends RequestType>(
+    reference: firebase.database.Reference
+) {
     const [isLoading, setLoading] = useState<boolean>(null!)
     const [errors, setErrors] = useState<any>(null)
     const [data, setData] = useState<T | null>(null)

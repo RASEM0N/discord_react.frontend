@@ -73,7 +73,6 @@ const MessageForm: React.FC<PropsType> = ({ currentChannel }) => {
                 create(
                     {
                         content: values.message,
-                        date: Date.now(),
                         createdBy: {
                             id: user.uid,
                             avatar: user.photoURL ? user.photoURL : 'name',

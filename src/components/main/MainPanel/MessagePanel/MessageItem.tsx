@@ -32,11 +32,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }))
 
-const MessageItem: React.FC<MessageTypeForState> = ({
-    content,
-    createdBy,
-    date,
-}) => {
+const MessageItem: React.FC<MessageTypeForState> = ({ content, createdBy }) => {
     const styles = useStyles()
 
     return (
@@ -58,7 +54,7 @@ const MessageItem: React.FC<MessageTypeForState> = ({
                                 className={styles.date}
                                 variant={'body2'}
                             >
-                                {date}
+                                {createdBy.date}
                             </Typography>
                         </>
                     }
