@@ -1,10 +1,10 @@
-export interface RegisterType {
+export interface RegisterFormType {
     username: string
     email: string
     password: string
 }
 
-export interface LoginType {
+export interface LoginFormType {
     email: string
     password: string
 }

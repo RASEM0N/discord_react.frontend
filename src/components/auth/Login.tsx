@@ -1,19 +1,22 @@
 import React from 'react'
-import Avatar from '@material-ui/core/Avatar'
-import Button from '@material-ui/core/Button'
-import CssBaseline from '@material-ui/core/CssBaseline'
-import TextField from '@material-ui/core/TextField'
-import Grid from '@material-ui/core/Grid'
-import LockOpenOutlinedIcon from '@material-ui/icons/LockOpenOutlined'
-import Typography from '@material-ui/core/Typography'
-
 import { Link } from 'react-router-dom'
 import { useFormik } from 'formik'
+
+import {
+    Avatar,
+    Button,
+    CssBaseline,
+    TextField,
+    Grid,
+    Typography,
+    Paper
+} from '@material-ui/core'
+import LockOpenOutlinedIcon from '@material-ui/icons/LockOpenOutlined'
+
 import { validationAuthLogin } from './some/validation'
-import { Paper } from '@material-ui/core'
 import useStyles from './some/style'
 import useLogin from '../../hooks/useLogin'
-import { ILogin } from '../../interfaces/auth'
+import { LoginFormType } from '../../interfaces/auth'
 
 const Login = () => {
     const { isLoading, errors, userAuthorization } = useLogin()
@@ -21,13 +24,13 @@ const Login = () => {
     const classes = useStyles({
         variant: 'login',
     })
-    const formik = useFormik({
+    const formik = useFormik<LoginFormType>({
         initialValues: {
             email: '',
             password: '',
         },
         validationSchema: validationAuthLogin,
-        onSubmit: (values: ILogin) => {
+        onSubmit: (values) => {
             userAuthorization(values)
         },
     })
