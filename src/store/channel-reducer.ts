@@ -7,6 +7,7 @@ type CreateByType = {
 }
 
 type ChannelType = {
+    id: string
     channelDetails: string
     channelName: string
     createdBy: CreateByType
@@ -15,25 +16,22 @@ type ChannelType = {
 const initialState = {
     currentChannel: null as null | ChannelType,
     channels: [] as Array<ChannelType>,
-    message: {
-        messages: [],
-        messageLoading: true,
-    },
     isLoading: true,
 }
-
-type InitialStateType = typeof initialState
 
 const channelReducer = createSlice({
     name: 'channels',
     initialState: initialState,
     reducers: {
-        setCurrentChannel: (state, action: PayloadAction<ChannelType>) => {
+        getCurrentChannel: (state, action: PayloadAction<ChannelType>) => {
             state.currentChannel = action.payload
             state.isLoading = false
+        },
+        getChannels: (state, action: PayloadAction<Array<ChannelType>>) => {
+            state.channels.push(...action.payload)
         },
     },
 })
 
 export default channelReducer.reducer
-export const { setCurrentChannel } = channelReducer.actions
+export const { getCurrentChannel, getChannels } = channelReducer.actions

@@ -1,10 +1,12 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit'
-import currentUser from './user-reducer'
+import userReducer from './user-reducer'
 import channelReducer from './channel-reducer'
+import messageReducer from './message-reducer'
 
 const rootReducer = combineReducers({
-    user: currentUser,
+    user: userReducer,
     channel: channelReducer,
+    message: messageReducer,
 })
 
 const store = configureStore({

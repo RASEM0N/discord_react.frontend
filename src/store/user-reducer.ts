@@ -6,14 +6,12 @@ const initialState = {
     isLoading: true,
 }
 
-type InitialStateType = typeof initialState
-
 const userReducer = createSlice({
     name: 'currentUser',
     initialState: initialState,
     reducers: {
         setCurrentUser: (state, action: PayloadAction<firebase.User>) => {
-            state.currentUser = payload
+            state.currentUser = action.payload
             state.isLoading = false
         },
 
