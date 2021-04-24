@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import { useFormik } from 'formik'
 import { validationMessage } from './utils/validation'
@@ -14,6 +14,7 @@ import { MessageFormType } from '../../../../type/form'
 import useAddToDatabase from '../../../../hooks/useAddToDatabase'
 import { messageRef } from '../../../../firebase/config'
 import { MessageRequestType } from '../../../../type/request'
+import MessageFileForm from './MessageFileForm'
 
 const useStyle = makeStyles((theme) => ({
     root: {
@@ -66,6 +67,7 @@ const MessageForm: React.FC<PropsType> = ({ currentChannel }) => {
     const user = useSelector<RootStateType, UserType | null>(
         (state) => state.user.currentUser
     )
+    const [openFile, setOpenFile] = useState(false)
 
     const formik = useFormik<MessageFormType>({
         initialValues: {
@@ -90,7 +92,11 @@ const MessageForm: React.FC<PropsType> = ({ currentChannel }) => {
     return (
         <div className={styles.root}>
             <form className={styles.form} onSubmit={formik.handleSubmit}>
-                <IconButton className={styles.iconButton} aria-label="menu">
+                <IconButton
+                    className={styles.iconButton}
+                    aria-label="menu"
+                    onClick={() => setOpenFile(true)}
+                >
                     <AddCircleIcon
                         style={{
                             color: 'white',
@@ -123,6 +129,13 @@ const MessageForm: React.FC<PropsType> = ({ currentChannel }) => {
                     Submit
                 </Button>
             </form>
+
+            {openFile && (
+                <MessageFileForm
+                    currentChannel={currentChannel}
+                    setOpenFile={setOpenFile}
+                />
+            )}
         </div>
     )
 }

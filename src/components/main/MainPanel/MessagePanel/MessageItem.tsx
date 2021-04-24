@@ -30,9 +30,17 @@ const useStyles = makeStyles((theme) => ({
         color: '#DCDDDE',
         fontSize: 16,
     },
+    image: {
+        maxWidth: '50%',
+        maxHeight: 300,
+    },
 }))
 
-const MessageItem: React.FC<MessageTypeForState> = ({ content, createdBy }) => {
+const MessageItem: React.FC<MessageTypeForState> = ({
+    content,
+    createdBy,
+    image,
+}) => {
     const styles = useStyles()
 
     return (
@@ -60,14 +68,23 @@ const MessageItem: React.FC<MessageTypeForState> = ({ content, createdBy }) => {
                     }
                     secondary={
                         <>
-                            <Typography
-                                component="span"
-                                variant="body2"
-                                color="textPrimary"
-                                className={styles.text}
-                            >
-                                {content}
-                            </Typography>
+                            {content && (
+                                <Typography
+                                    component="span"
+                                    variant="body2"
+                                    color="textPrimary"
+                                    className={styles.text}
+                                >
+                                    {content}
+                                </Typography>
+                            )}
+                            {image && (
+                                <img
+                                    src={image}
+                                    alt="nema"
+                                    className={styles.image}
+                                />
+                            )}
                         </>
                     }
                 />

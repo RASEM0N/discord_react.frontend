@@ -8,7 +8,8 @@ export type CreateByType = {
 }
 
 export type MessageRequestType = {
-    content: string
+    content?: string
+    image?: string
     createdBy: CreateByType
 }
 

@@ -27,4 +27,6 @@ export const fbStorage = firebase.storage()
 export const userRef = fbDatabase.ref('users')
 export const channelRef = fbDatabase.ref('channels')
 export const messageRef = fbDatabase.ref('messages')
+
+export const imageStorageRef = fbStorage.ref('images')
 export default firebase
